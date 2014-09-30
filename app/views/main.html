@@ -1,50 +1,54 @@
 <!-- Nav Partial -->
 <div ng-include="'views/navbar.html'"></div>
 
-  <div class="container">
+<div class="container">
 
     <!-- Repeating Panels -->
-    <div class="row" ng-repeat="(teamKey, teamStats) in teamsData">
-      <div class="panel panel-primary">
+    <div class="row" >
+        <div class="col-md-6" ng-repeat="(teamKey, teamStats) in teamsData">
+            <div class="panel panel-primary">
 
-        <!-- Team Label -->
-        <div class="panel-heading">
-          <h2>{{ teamKey }}</h2>
+                <!-- Team Label -->
+                <div class="panel-heading">{{ teamKey }}</div>
+
+                <table class="table table-striped">
+                    <tr ng-repeat="(statName, statGroup) in teamStats">
+                        <td>
+                            <table>
+
+                                <!-- Team Stat -->
+                                <tr>
+                                    <td>
+                                        <h4>{{ statName | uppercase }}</h4>
+                                    </td>
+                                </tr>
+
+                                <!-- Player Stats -->
+                                <tr ng-repeat-start="playerStats in statGroup | filter:{name: state.filterText}">
+                                    <td>
+                                        <h5>{{ playerStats.name }}</h5>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat-end>
+                                    <td>
+                                        <ul class="list-inline">
+
+                                            <!-- Individual Stat -->
+                                            <li ng-repeat="(dataPointName, dataPoint) in playerStats">
+                                                {{ dataPointName | uppercase }} {{ dataPoint }}
+                                            </li>
+
+                                        </ul>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
         </div>
-
-        <table class="table table-striped">
-          <tr ng-repeat="(statName, statGroup) in teamStats">
-            <td>
-              <table>
-
-                <!-- Team Stat -->
-                <tr>
-                  <td>
-                    <h3>{{ statName | uppercase }}</h3>
-                  </td>
-                </tr>
-
-                <!-- Player Stats -->
-                <tr ng-repeat="playerStats in statGroup | filter:{name: state.filterText}">
-                  <td>{{ playerStats.name }}</td>
-                  <td>
-                    <ul class="list-inline">
-
-                      <!-- Individual Stat -->
-                      <li ng-repeat="(dataPointName, dataPoint) in playerStats">
-                        {{ dataPointName | uppercase }} {{ dataPoint }}
-                      </li>
-
-                    </ul>
-                  </td>
-                </tr>
-
-              </table>
-            </td>
-          </tr>
-        </table>
-
-      </div>
     </div>
 
-  </div>
+</div>
